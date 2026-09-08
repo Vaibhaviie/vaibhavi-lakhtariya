@@ -206,47 +206,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------------------------------------------------
-    // 5. 3D PERSPECTIVE TILT ON PROJECT CARDS
+    // 5. 3D PERSPECTIVE TILT ON PROJECT CARDS (Desktop with fine pointer only)
     // ----------------------------------------------------------------------
-    const tiltCards = document.querySelectorAll('.tilt-card');
-    tiltCards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const cardWidth = rect.width;
-            const cardHeight = rect.height;
-            const centerX = rect.left + cardWidth / 2;
-            const centerY = rect.top + cardHeight / 2;
-            const mouseX = e.clientX - centerX;
-            const mouseY = e.clientY - centerY;
+    const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-            const rotateX = (-mouseY / (cardHeight / 2)) * 7;
-            const rotateY = (mouseX / (cardWidth / 2)) * 7;
+    if (hasFinePointer) {
+        const tiltCards = document.querySelectorAll('.tilt-card');
+        tiltCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const cardWidth = rect.width;
+                const cardHeight = rect.height;
+                const centerX = rect.left + cardWidth / 2;
+                const centerY = rect.top + cardHeight / 2;
+                const mouseX = e.clientX - centerX;
+                const mouseY = e.clientY - centerY;
 
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+                const rotateX = (-mouseY / (cardHeight / 2)) * 7;
+                const rotateY = (mouseX / (cardWidth / 2)) * 7;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+            });
         });
 
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
-        });
-    });
+        // ----------------------------------------------------------------------
+        // 6. MAGNETIC BUTTON EFFECT (Desktop only)
+        // ----------------------------------------------------------------------
+        const magneticBtns = document.querySelectorAll('.magnetic-btn');
+        magneticBtns.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - (rect.left + rect.width / 2);
+                const y = e.clientY - (rect.top + rect.height / 2);
 
-    // ----------------------------------------------------------------------
-    // 6. MAGNETIC BUTTON EFFECT
-    // ----------------------------------------------------------------------
-    const magneticBtns = document.querySelectorAll('.magnetic-btn');
-    magneticBtns.forEach(btn => {
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - (rect.left + rect.width / 2);
-            const y = e.clientY - (rect.top + rect.height / 2);
+                btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+            });
 
-            btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0px, 0px)';
+            });
         });
-
-        btn.addEventListener('mouseleave', () => {
-            btn.style.transform = 'translate(0px, 0px)';
-        });
-    });
+    }
 
     // ----------------------------------------------------------------------
     // 7. PROJECT DETAIL SLIDE-OVER DRAWER MODAL DATA & CONTROLLER
@@ -386,6 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeProjectDrawer();
+            closeMobileMenu();
         }
     });
 
@@ -420,21 +425,80 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // ----------------------------------------------------------------------
+    // 10. MOBILE NAVIGATION DRAWER & BACKDROP CONTROLLER
+    // ----------------------------------------------------------------------
     const mobileToggle = document.getElementById('mobileToggle');
     const navMenu = document.getElementById('navMenu');
+    const mobileMenuBackdrop = document.getElementById('mobileMenuBackdrop');
+    const mobileDrawerClose = document.getElementById('mobileDrawerClose');
+
+    function closeMobileMenu() {
+        if (!navMenu) return;
+        navMenu.classList.remove('open');
+        if (mobileToggle) {
+            mobileToggle.classList.remove('active');
+            mobileToggle.setAttribute('aria-expanded', 'false');
+        }
+        if (mobileMenuBackdrop) {
+            mobileMenuBackdrop.classList.remove('active');
+            mobileMenuBackdrop.setAttribute('aria-hidden', 'true');
+        }
+        document.body.style.overflow = '';
+    }
+
+    function openMobileMenu() {
+        if (!navMenu) return;
+        navMenu.classList.add('open');
+        if (mobileToggle) {
+            mobileToggle.classList.add('active');
+            mobileToggle.setAttribute('aria-expanded', 'true');
+        }
+        if (mobileMenuBackdrop) {
+            mobileMenuBackdrop.classList.add('active');
+            mobileMenuBackdrop.setAttribute('aria-hidden', 'false');
+        }
+        document.body.style.overflow = 'hidden';
+    }
 
     if (mobileToggle && navMenu) {
-        mobileToggle.addEventListener('click', () => {
-            const isOpen = navMenu.classList.toggle('open');
-            mobileToggle.classList.toggle('active', isOpen);
-            mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        });
+        const toggleMenu = (e) => {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            const isOpen = navMenu.classList.contains('open');
+            if (isOpen) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        };
+
+        mobileToggle.addEventListener('click', toggleMenu);
+
+        if (mobileDrawerClose) {
+            mobileDrawerClose.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                closeMobileMenu();
+            });
+        }
+
+        if (mobileMenuBackdrop) {
+            mobileMenuBackdrop.addEventListener('click', closeMobileMenu);
+        }
 
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
-                mobileToggle.classList.remove('active');
-                navMenu.classList.remove('open');
-                mobileToggle.setAttribute('aria-expanded', 'false');
+                closeMobileMenu();
+            });
+        });
+
+        const drawerFooterLinks = navMenu.querySelectorAll('.drawer-social-link, .mobile-resume-btn');
+        drawerFooterLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                setTimeout(closeMobileMenu, 200);
             });
         });
     }
@@ -443,4 +507,54 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
+
+    // ----------------------------------------------------------------------
+    // 11. VIEW SOURCE & DEVTOOLS DETERRENTS
+    // ----------------------------------------------------------------------
+    // 1. Disable Right-Click Context Menu (Prevents 'View Page Source', 'Inspect', etc.)
+    document.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+    });
+
+    // 2. Disable Keyboard Shortcuts (Ctrl+U, F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+S)
+    window.addEventListener('keydown', (e) => {
+        const isMac = navigator.platform && navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+        const ctrlOrCmd = isMac ? e.metaKey : e.ctrlKey;
+        const key = e.key ? e.key.toLowerCase() : '';
+
+        // Block F12 (DevTools)
+        if (e.key === 'F12' || e.keyCode === 123) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+
+        if (ctrlOrCmd) {
+            // Block Ctrl+U / Cmd+U (View Page Source)
+            if (key === 'u') {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+
+            // Block Ctrl+Shift+I / J / C (DevTools & Inspect Element)
+            if (e.shiftKey && (key === 'i' || key === 'j' || key === 'c')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+
+            // Block Ctrl+S / Cmd+S (Save Page)
+            if (key === 's') {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }
+    }, true);
+
+    // 3. Disable Image and Asset Dragging
+    document.addEventListener('dragstart', (e) => {
+        e.preventDefault();
+    });
 });

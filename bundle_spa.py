@@ -1,4 +1,68 @@
-<!doctype html>
+import os
+import re
+import json
+
+base_dir = r"c:\Users\Admin\.gemini\antigravity-ide\scratch\vaibhavi-portfolio"
+
+index_path = os.path.join(base_dir, "index.html")
+style_path = os.path.join(base_dir, "style.css")
+script_path = os.path.join(base_dir, "script.js")
+assets_dir = os.path.join(base_dir, "assets")
+
+os.makedirs(assets_dir, exist_ok=True)
+
+with open(index_path, "r", encoding="utf-8") as f:
+    html = f.read()
+
+body_match = re.search(r"<body[^>]*>(.*?)</body>", html, re.DOTALL | re.IGNORECASE)
+if not body_match:
+    print("Could not find body tag")
+    exit(1)
+
+body_html = body_match.group(1).strip()
+
+with open(style_path, "r", encoding="utf-8") as f:
+    css = f.read()
+
+with open(script_path, "r", encoding="utf-8") as f:
+    js = f.read()
+
+# Write css asset
+with open(os.path.join(assets_dir, "index-tap_ZvS0.css"), "w", encoding="utf-8") as f:
+    f.write(css)
+
+# Create assets/index-BESIVZCu.js
+json_html = json.dumps(body_html)
+
+bundle_js = f"""// Vite/SPA Client Bundle - Vaibhavi Lakhtariya Portfolio
+(function() {{
+    const template = {json_html};
+
+    function mountAndInit() {{
+        const root = document.getElementById('root');
+        if (!root) return;
+        root.innerHTML = template;
+        
+        // Execute Interactive Application Logic
+        initPortfolioApp();
+    }}
+
+    function initPortfolioApp() {{
+{js}
+    }}
+
+    if (document.readyState === 'loading') {{
+        document.addEventListener('DOMContentLoaded', mountAndInit);
+    }} else {{
+        mountAndInit();
+    }}
+}})();
+"""
+
+with open(os.path.join(assets_dir, "index-BESIVZCu.js"), "w", encoding="utf-8") as f:
+    f.write(bundle_js)
+
+spa_index_html = """<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -28,4 +92,9 @@
 <body>
     <div id="root"></div>
 </body>
-</html>
+</html>"""
+
+with open(index_path, "w", encoding="utf-8") as f:
+    f.write(spa_index_html)
+
+print("SUCCESS: index.html transformed into SPA root template!")
