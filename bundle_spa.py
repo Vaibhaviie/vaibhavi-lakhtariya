@@ -11,15 +11,20 @@ assets_dir = os.path.join(base_dir, "assets")
 
 os.makedirs(assets_dir, exist_ok=True)
 
+template_path = os.path.join(base_dir, "template.html")
+
 with open(index_path, "r", encoding="utf-8") as f:
     html = f.read()
 
 body_match = re.search(r"<body[^>]*>(.*?)</body>", html, re.DOTALL | re.IGNORECASE)
-if not body_match:
-    print("Could not find body tag")
-    exit(1)
+body_html = body_match.group(1).strip() if body_match else ""
 
-body_html = body_match.group(1).strip()
+if ("<div id=\"root\"></div>" in body_html or not body_html) and os.path.exists(template_path):
+    with open(template_path, "r", encoding="utf-8") as tf:
+        body_html = tf.read().strip()
+elif not body_html:
+    print("Could not find body content or template.html")
+    exit(1)
 
 with open(style_path, "r", encoding="utf-8") as f:
     css = f.read()

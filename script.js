@@ -298,6 +298,20 @@ document.addEventListener('DOMContentLoaded', () => {
             ],
             tags: ['WordPress', 'Category Pages', 'Booking Integration', 'Lead Gen Form', 'WCAG Accessibility']
         },
+        'ai-chat-widget': {
+            title: 'AI Chat Assistant Widget',
+            category: 'Conversational AI / Full-Stack',
+            badge: '<i class="fa-solid fa-globe"></i> Live Project',
+            intro: 'An embeddable AI-powered chat widget built from scratch with vanilla JS and Node.js/Express, featuring secure Anthropic Claude API proxying and dual-mode conversational fallback.',
+            scores: { perf: 100, access: 100, best: 100, seo: 100 },
+            architecture: [
+                'Engineered zero-dependency vanilla JS widget with DOM isolation to prevent host site CSS conflicts.',
+                'Developed secure Node.js/Express backend proxy ensuring Anthropic Claude API keys never expose to the client browser.',
+                'Architected dual-mode engine: live Claude API responses with seamless, anti-repetition context-aware fallback for demo mode.',
+                'Designed responsive UI with real-time typing indicators, animated chat bubbles, and drop-in single script tag distribution.'
+            ],
+            tags: ['Vanilla JS (Zero-Dep)', 'Node.js / Express', 'Anthropic Claude API', 'DOM Isolation', 'Vercel Hosted']
+        },
         'forge-fitness': {
             title: 'FORGE Fitness',
             category: 'Animated Wellness Brand',
