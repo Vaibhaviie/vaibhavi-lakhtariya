@@ -78,7 +78,7 @@ story = []
 story.append(Paragraph("VAIBHAVI LAKHTARIYA", title_style))
 story.append(Spacer(1, 3))
 story.append(Paragraph("FRONT-END WEB DEVELOPER (WORDPRESS)", subtitle_style))
-story.append(Paragraph('+91 75750 11648 &nbsp;|&nbsp; vaibhailakhtariya1771@gmail.com &nbsp;|&nbsp; <a href="https://www.linkedin.com/in/vaibhavi-lakhtariya-a58179235/" color="#B84D26"><u>LinkedIn Profile</u></a>', contact_style))
+story.append(Paragraph('+91 75750 11648 &nbsp;|&nbsp; vaibhailakhtariya1771@gmail.com &nbsp;|&nbsp; <a href="https://www.linkedin.com/in/vaibhavi-lakhtariya-a58179235/" color="#9D2A6E"><u>LinkedIn Profile</u></a>', contact_style))
 story.append(Paragraph("Ahmedabad, Gujarat, India", contact_style))
 story.append(Spacer(1, 14))
 

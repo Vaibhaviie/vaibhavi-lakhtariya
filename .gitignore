@@ -1,0 +1,44 @@
+# Operating System Junk
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary & Output Directories
+tmp/
+temp/
+.tmp/
+output/
+artifacts/
+playwright-report/
+test-results/
+
+# AI Tool, Agent, & IDE Artifacts
+.antigravity/
+.agent/
+brain/
+scratch/
+.system_generated/
+.tempmediaStorage/
+browser/
+walkthrough.md*
+implementation_plan.md*
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Screenshots and Test Captures
+verify_*.webp
+reload_*.webp
+screenshot-*.png
+media_*.png

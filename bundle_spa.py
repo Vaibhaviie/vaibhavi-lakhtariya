@@ -68,16 +68,17 @@ with open(os.path.join(assets_dir, "index-BESIVZCu.js"), "w", encoding="utf-8") 
     f.write(bundle_js)
 
 spa_index_html = """<!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#131211" />
     <title>Vaibhavi Lakhtariya — Front-End Web Developer</title>
     <meta name="description" content="Portfolio of Vaibhavi Lakhtariya, Front-End Web Developer with 3.5+ years of experience crafting fast, responsive web applications & digital experiences in Ahmedabad, India." />
     <meta name="author" content="Vaibhavi Lakhtariya" />
     
     <!-- Favicon Initials SVG -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23C85A32'/><text x='50%' y='62%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='42' fill='%23FFFFFF'>VL</text></svg>" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%239D2A6E'/><text x='50%' y='62%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='42' fill='%23FFFFFF'>VL</text></svg>" />
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -91,8 +92,8 @@ spa_index_html = """<!doctype html>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
     
-    <script type="module" crossorigin src="assets/index-BESIVZCu.js"></script>
-    <link rel="stylesheet" crossorigin href="assets/index-tap_ZvS0.css" />
+    <script type="module" crossorigin src="assets/index-BESIVZCu.js?v=card-spacing-fix"></script>
+    <link rel="stylesheet" crossorigin href="assets/index-tap_ZvS0.css?v=card-spacing-fix" />
 </head>
 <body>
     <div id="root"></div>

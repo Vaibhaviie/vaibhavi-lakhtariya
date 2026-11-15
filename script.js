@@ -66,42 +66,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeIcon = document.getElementById('themeIcon');
 
     const setTheme = (theme) => {
-        if (theme === 'dark') {
+        if (theme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            if (themeIcon) {
+                themeIcon.className = 'fa-solid fa-moon';
+            }
+            if (themeToggleBtn) {
+                themeToggleBtn.setAttribute('aria-label', 'Switch to dark theme');
+                themeToggleBtn.setAttribute('title', 'Switch to dark theme');
+            }
+            localStorage.setItem('portfolio-theme', 'light');
+        } else {
             document.documentElement.setAttribute('data-theme', 'dark');
             if (themeIcon) {
                 themeIcon.className = 'fa-solid fa-circle-half-stroke';
             }
             if (themeToggleBtn) {
                 themeToggleBtn.setAttribute('aria-label', 'Switch to light theme');
+                themeToggleBtn.setAttribute('title', 'Switch to light theme');
             }
             localStorage.setItem('portfolio-theme', 'dark');
-        } else {
-            document.documentElement.removeAttribute('data-theme');
-            if (themeIcon) {
-                themeIcon.className = 'fa-solid fa-moon';
-            }
-            if (themeToggleBtn) {
-                themeToggleBtn.setAttribute('aria-label', 'Switch to dark theme');
-            }
-            localStorage.setItem('portfolio-theme', 'light');
         }
     };
 
-    // Load saved theme preference
+    // Load saved theme preference - default to dark
     const savedTheme = localStorage.getItem('portfolio-theme');
-    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    if (savedTheme === 'light') {
+        setTheme('light');
+    } else {
         setTheme('dark');
     }
 
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
             const currentTheme = document.documentElement.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                setTheme('light');
-                showToast('Switched to Warm Editorial Light Mode.');
-            } else {
+            if (currentTheme === 'light') {
                 setTheme('dark');
                 showToast('Switched to Warm Obsidian Dark Mode.');
+            } else {
+                setTheme('light');
+                showToast('Switched to Warm Editorial Light Mode.');
             }
         });
     }
