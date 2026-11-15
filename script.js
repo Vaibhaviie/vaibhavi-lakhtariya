@@ -457,6 +457,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (mobileToggle) {
             mobileToggle.classList.remove('active');
             mobileToggle.setAttribute('aria-expanded', 'false');
+            mobileToggle.setAttribute('aria-label', 'Toggle navigation menu');
         }
         if (mobileMenuBackdrop) {
             mobileMenuBackdrop.classList.remove('active');
@@ -471,6 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (mobileToggle) {
             mobileToggle.classList.add('active');
             mobileToggle.setAttribute('aria-expanded', 'true');
+            mobileToggle.setAttribute('aria-label', 'Close navigation menu');
         }
         if (mobileMenuBackdrop) {
             mobileMenuBackdrop.classList.add('active');

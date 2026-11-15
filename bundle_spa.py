@@ -92,8 +92,8 @@ spa_index_html = """<!doctype html>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
     
-    <script type="module" crossorigin src="assets/index-BESIVZCu.js?v=card-spacing-fix"></script>
-    <link rel="stylesheet" crossorigin href="assets/index-tap_ZvS0.css?v=card-spacing-fix" />
+    <script type="module" crossorigin src="assets/index-BESIVZCu.js?v=mobile-nav-fix"></script>
+    <link rel="stylesheet" crossorigin href="assets/index-tap_ZvS0.css?v=mobile-nav-fix" />
 </head>
 <body>
     <div id="root"></div>
