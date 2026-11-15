@@ -92,8 +92,8 @@ spa_index_html = """<!doctype html>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
     
-    <script type="module" crossorigin src="assets/index-BESIVZCu.js?v=mobile-nav-fix"></script>
-    <link rel="stylesheet" crossorigin href="assets/index-tap_ZvS0.css?v=mobile-nav-fix" />
+    <script type="module" crossorigin src="assets/index-BESIVZCu.js?v=shopify-skills-v1"></script>
+    <link rel="stylesheet" crossorigin href="assets/index-tap_ZvS0.css?v=shopify-skills-v1" />
 </head>
 <body>
     <div id="root"></div>

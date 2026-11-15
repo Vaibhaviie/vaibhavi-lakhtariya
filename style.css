@@ -1024,6 +1024,7 @@ body.hovering-interactive .cursor-ring {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    max-width: 100%;
     padding: 8px 14px;
     background-color: var(--bg-subtle);
     border: 1px solid transparent;
